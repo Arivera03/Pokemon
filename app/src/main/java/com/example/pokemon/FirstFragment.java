@@ -47,7 +47,7 @@ public class FirstFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         int id = 1;
-        int ultimaid = 10;
+        int ultimaid = 151;
         llamarPokes(id, ultimaid);
     }
 
