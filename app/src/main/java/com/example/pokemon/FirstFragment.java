@@ -46,29 +46,34 @@ public class FirstFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        for (int id = 1; id <= 10; id++) {
-            llamarPokes(id);
-        }
+        int id = 1;
+        int ultimaid = 10;
+        llamarPokes(id, ultimaid);
     }
 
-    private void llamarPokes(int id) {
-        MetodosPokes metodosPokes = new MetodosPokes();
+    private void llamarPokes(int id, int uid) {
+        if (id > uid){
+            Toast.makeText(getContext(),"Todos los pokemons han sido listaos de puta madre", Toast.LENGTH_SHORT).show();
+        } else {
+            MetodosPokes metodosPokes = new MetodosPokes();
 
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        executor.execute(() -> {
-            metodosPokes.getPokemon((id), pokemon -> {
-                if (pokemon != null) {
-                    getActivity().runOnUiThread(() -> {
-                        pokes.add(pokemon.getName());
-                        adapter.notifyDataSetChanged();
-                    });
-                } else {
-                    getActivity().runOnUiThread(() ->
-                            Toast.makeText(getContext(), "Error al cargar el Pokémon con ID " + id, Toast.LENGTH_SHORT).show()
-                    );
-                }
+            ExecutorService executor = Executors.newSingleThreadExecutor();
+            executor.execute(() -> {
+                metodosPokes.getPokemon((id), pokemon -> {
+                    if (pokemon != null) {
+                        getActivity().runOnUiThread(() -> {
+                            pokes.add(pokemon.getName());
+                            adapter.notifyDataSetChanged();
+                            llamarPokes(id + 1, uid);
+                        });
+                    } else {
+                        getActivity().runOnUiThread(() ->
+                                Toast.makeText(getContext(), "Error al cargar el Pokémon con ID " + id, Toast.LENGTH_SHORT).show()
+                        );
+                    }
+                });
             });
-        });
+        }
     }
 
 
