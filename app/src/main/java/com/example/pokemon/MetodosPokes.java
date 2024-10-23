@@ -9,7 +9,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MetodosPokes{
-    public void getPokemon(String id, Consumer<Pokemon> callback) {
+    public void getPokemon(int id, Consumer<Pokemon> callback) {
         Llamarapi api = new Llamarapi();
         Call<Pokemon> call = api.pokemonAPI.getPokemon(id);
 
