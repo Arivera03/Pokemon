@@ -23,8 +23,8 @@ import retrofit2.Call;
 public class FirstFragment extends Fragment {
 
     private FragmentFirstBinding binding;
-    private ArrayList<Pokemon> pokes = new ArrayList<>();
-    private ArrayAdapter<Pokemon> adapter;
+    private ArrayList<String> pokes = new ArrayList<>();
+    private ArrayAdapter<String> adapter;
 
     @Override
     public View onCreateView(
@@ -46,31 +46,29 @@ public class FirstFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        int id = 1;
-        llamarPokes(id);
-        id++;
+        for (int id = 1; id <= 10; id++) {
+            llamarPokes(id);
+        }
     }
 
     private void llamarPokes(int id) {
         MetodosPokes metodosPokes = new MetodosPokes();
+
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {
-            InterfazApi api = new InterfazApi() {
-                @Override
-                public Call<Pokemon> getPokemon(int id) {
-                    return null;
-                }
-            };
-            String result = api.getPokemon(1);
-
-            handler.post(() -> {
-                // Aquest codi s'executa en primer pla.
-                adapter.clear();
-                for (Movie peli : movies) {
-                    adapter.add(peli);
+            metodosPokes.getPokemon((id), pokemon -> {
+                if (pokemon != null) {
+                    getActivity().runOnUiThread(() -> {
+                        pokes.add(pokemon.getName());
+                        adapter.notifyDataSetChanged();
+                    });
+                } else {
+                    getActivity().runOnUiThread(() ->
+                            Toast.makeText(getContext(), "Error al cargar el Pokémon con ID " + id, Toast.LENGTH_SHORT).show()
+                    );
                 }
             });
-        }
+        });
     }
 
 
