@@ -14,6 +14,11 @@ import androidx.fragment.app.Fragment;
 import com.example.pokemon.databinding.FragmentFirstBinding;
 
 import java.util.ArrayList;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import retrofit2.Call;
 
 public class FirstFragment extends Fragment {
 
@@ -42,26 +47,30 @@ public class FirstFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         int id = 1;
-        fetchPokemon(id);
+        llamarPokes(id);
         id++;
     }
 
-    private void fetchPokemon(int id) {
+    private void llamarPokes(int id) {
         MetodosPokes metodosPokes = new MetodosPokes();
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> {
+            InterfazApi api = new InterfazApi() {
+                @Override
+                public Call<Pokemon> getPokemon(int id) {
+                    return null;
+                }
+            };
+            String result = api.getPokemon(1);
 
-        metodosPokes.getPokemon(id, pokemon -> {
-            if (pokemon != null) {
-                getActivity().runOnUiThread(() -> {
-                    pokes.add(pokemon);
-                    Toast.makeText(getContext(), "furula", Toast.LENGTH_SHORT).show();
-
-                });
-            } else {
-                getActivity().runOnUiThread(() ->
-                        Toast.makeText(getContext(), "No furula", Toast.LENGTH_SHORT).show()
-                );
-            }
-        });
+            handler.post(() -> {
+                // Aquest codi s'executa en primer pla.
+                adapter.clear();
+                for (Movie peli : movies) {
+                    adapter.add(peli);
+                }
+            });
+        }
     }
 
 
