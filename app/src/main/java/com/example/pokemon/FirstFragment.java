@@ -23,8 +23,8 @@ import retrofit2.Call;
 public class FirstFragment extends Fragment {
 
     private FragmentFirstBinding binding;
-    private ArrayList<String> pokes = new ArrayList<>();
-    private ArrayAdapter<String> adapter;
+    private ArrayList<Pokemon> pokes = new ArrayList<>();
+    private ArrayAdapter<Pokemon> adapter;
 
     @Override
     public View onCreateView(
@@ -35,7 +35,7 @@ public class FirstFragment extends Fragment {
 
         pokes = new ArrayList<>();
 
-        adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, pokes);
+        adapter = new adaptador(getContext(),R.layout.fragment_listapag1_pokemon,pokes);
 
         binding.pokemonListView.setAdapter(adapter);
 
@@ -62,7 +62,7 @@ public class FirstFragment extends Fragment {
                 metodosPokes.getPokemon((id), pokemon -> {
                     if (pokemon != null) {
                         getActivity().runOnUiThread(() -> {
-                            pokes.add(pokemon.getName());
+                            pokes.add(pokemon);
                             adapter.notifyDataSetChanged();
                             llamarPokes(id + 1, uid);
                         });

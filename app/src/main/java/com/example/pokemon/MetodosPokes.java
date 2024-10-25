@@ -16,11 +16,11 @@ public class MetodosPokes{
         call.enqueue(new Callback <Pokemon> () {
             @Override
             public void onResponse(Call <Pokemon> call, Response <Pokemon> response) {
-                if(response.isSuccessful()){
-                    Pokemon pokemon = new Pokemon(response.body().name, response.body().id, response.body().sprite, response.body().weight, response.body().types);
+                if (response.isSuccessful() && response.body() != null) {
+                    Pokemon pokemon = response.body();
                     callback.accept(pokemon);
                 } else {
-                    Log.e("error", "Hubo un error inesperado!");
+                    Log.e("error", "Esto no va chaval");
                     callback.accept(null);
                 }
             }

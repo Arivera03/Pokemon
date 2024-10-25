@@ -1,11 +1,14 @@
 package com.example.pokemon;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class Pokemon {
     public String name;
     public int id;
-    public String sprite;
+    @SerializedName("sprites")
+    public Sprite sprite;
     public double weight;
     public List<Type> types;
 
@@ -13,7 +16,7 @@ public class Pokemon {
 
     }
 
-    public Pokemon(String n, int id, String s, double w, List<Type> t){
+    public Pokemon(String n, int id, Sprite s, double w, List<Type> t){
         this.name = n;
         this.id = id;
         this.sprite = s;
@@ -46,11 +49,11 @@ public class Pokemon {
         this.weight = weight;
     }
 
-    public String getSprite() {
+    public Sprite getSprite() {
         return sprite;
     }
 
-    public void setSprite(String sprite) {
+    public void setSprite(Sprite sprite) {
         this.sprite = sprite;
     }
 
