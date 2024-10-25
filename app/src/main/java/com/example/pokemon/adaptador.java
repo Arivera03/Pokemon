@@ -28,9 +28,11 @@ public class adaptador extends ArrayAdapter<Pokemon> {
         }
 
         TextView nombrepoke = convertView.findViewById(R.id.pokemonNombre);
+        TextView numpoke = convertView.findViewById(R.id.pokemonNumero);
         ImageView spritepoke = convertView.findViewById(R.id.pokemonSprite);
 
-        nombrepoke.setText(pokemon.getName());
+        nombrepoke.setText(pokemon.getName().toUpperCase());
+        numpoke.setText("#" + pokemon.getId());
         String spriteUrl = pokemon.getSprite().getFrontDefault();
         Glide.with(getContext()).load(spriteUrl).into(spritepoke);
 
