@@ -2,9 +2,10 @@ package com.example.pokemon;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Pokemon {
+public class Pokemon implements Serializable {
     public String name;
     public int id;
     @SerializedName("sprites")
