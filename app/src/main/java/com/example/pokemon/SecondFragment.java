@@ -26,13 +26,12 @@ public class SecondFragment extends Fragment {
 
     }
 
+    @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        binding.buttonSecond.setOnClickListener(v ->
-                NavHostFragment.findNavController(SecondFragment.this)
-                        .navigate(R.id.action_SecondFragment_to_FirstFragment)
-        );
+        if (getArguments() != null) {
+            Pokemon pokemon = (Pokemon) getArguments().getSerializable("item");
+        }
     }
 
     @Override

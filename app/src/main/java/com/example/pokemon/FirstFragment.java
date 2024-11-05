@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.pokemon.databinding.FragmentFirstBinding;
 
@@ -48,6 +49,14 @@ public class FirstFragment extends Fragment {
 
         int id = 1;
         int ultimaid = 151;
+        binding.pokemonListView.setOnItemClickListener((adapter, fragment, i, l) -> {
+            Pokemon poke = (Pokemon) adapter.getItemAtPosition(i);
+            Bundle args = new Bundle();
+            args.putSerializable("item", poke);
+
+            NavHostFragment.findNavController(FirstFragment.this)
+                    .navigate(R.id.action_FirstFragment_to_SecondFragment, args);
+        });
         llamarPokes(id, ultimaid);
     }
 
