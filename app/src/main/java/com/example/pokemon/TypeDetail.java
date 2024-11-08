@@ -1,7 +1,11 @@
 package com.example.pokemon;
 
+import com.google.gson.annotations.SerializedName;
+
 public class TypeDetail {
+    @SerializedName("name")
     public String name;
+    @SerializedName("url")
     public String url;
 
     public TypeDetail(String name, String url) {

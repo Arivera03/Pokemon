@@ -1,7 +1,11 @@
 package com.example.pokemon;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Type {
+    @SerializedName("slot")
     public int slot;
+    @SerializedName("type")
     public TypeDetail detalletipo;
 
     public Type(int slot, TypeDetail detalletipo) {
